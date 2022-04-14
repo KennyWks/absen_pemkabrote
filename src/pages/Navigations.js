@@ -6,16 +6,18 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Login from './LoginScreen';
-import Dashboard from './DashboardScreen';
-
-import {View, TouchableOpacity, Image} from 'react-native';
+import Dashboard from './SideMenuNavigation';
+import Peta from './PetaScreen';
+import FormTambahKerja from './FormTambahKerjaScreen';
+import FormUbahKerja from './FormUbahKerjaScreen';
+import BackNavigation from '../components/BackNavigation';
 
 const Stack = createStackNavigator();
 
 const Navigation = () => {
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
+      <NavigationContainer independent={true}>
         <Stack.Navigator>
           <Stack.Screen
             name="Login"
@@ -27,31 +29,32 @@ const Navigation = () => {
             component={Dashboard}
             options={{headerShown: false}}
           />
+          <Stack.Screen
+            name="Peta"
+            component={Peta}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Tambah Kegiatan"
+            component={FormTambahKerja}
+            options={({navigation, route}) => ({
+              headerLeft: props => (
+                <BackNavigation page="Dashboard" navigation={navigation} />
+              ),
+            })}
+          />
+          <Stack.Screen
+            name="Ubah Kegiatan"
+            component={FormUbahKerja}
+            options={({navigation, route}) => ({
+              headerLeft: props => (
+                <BackNavigation page="Dashboard" navigation={navigation} />
+              ),
+            })}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
-  );
-};
-
-const NavigationDrawerStructure = props => {
-  //Structure for the navigatin Drawer
-  const toggleDrawer = () => {
-    //Props to open/close the drawer
-    props.navigationProps.toggleDrawer();
-  };
-
-  return (
-    <View style={{flexDirection: 'row'}}>
-      <TouchableOpacity onPress={toggleDrawer}>
-        {/*Donute Button Image */}
-        <Image
-          source={{
-            uri: 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/drawerWhite.png',
-          }}
-          style={{width: 25, height: 25, marginLeft: 5}}
-        />
-      </TouchableOpacity>
-    </View>
   );
 };
 

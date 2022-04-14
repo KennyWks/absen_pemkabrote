@@ -1,20 +1,21 @@
 import React, {useState} from 'react';
-import {TouchableOpacity, StyleSheet, View} from 'react-native';
+import {Alert, View, ActivityIndicator} from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
-import BackButton from '../components/BackButton';
-import {theme} from '../core/theme';
+import BackButtonLogin from '../components/BackButtonLogin';
 import {idValidator} from '../helpers/idValidator';
 import {passwordValidator} from '../helpers/passwordValidator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {postData} from '../helpers/CRUD';
+import Spinner from '../components/SpinnerScreen';
 
 export default function LoginScreen({navigation}) {
   const [id, setid] = useState({value: '', error: ''});
   const [password, setPassword] = useState({value: '', error: ''});
+  const [load, setLoad] = useState(false);
 
   const onLoginPressed = () => {
     const idError = idValidator(id.value);
@@ -28,26 +29,37 @@ export default function LoginScreen({navigation}) {
   };
 
   const submitLogin = async () => {
+    setLoad(true);
     try {
       const response = await postData('/login', {
         nip: id.value,
         password: password.value,
       });
-      await AsyncStorage.setItem('accessToken', response.data.token);
-      navigation.reset({
-        index: 0,
-        routes: [{name: 'Dashboard'}],
-      });
+      if (response.data.status === 200) {
+        await AsyncStorage.setItem('accessToken', response.data.token);
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'Dashboard'}],
+        });
+      } else {
+        Alert.alert(response.data.message);
+        setPassword({value: ''});
+      }
     } catch (error) {
-      console.log(error);
+      Alert.alert(error.response.status);
+      // console.log(error.response);
     }
+    setLoad(false);
   };
 
   return (
     <Background>
-      <BackButton goBack={navigation.goBack} />
+      <BackButtonLogin />
       <Logo />
       <Header>Selamat Datang!</Header>
+      <View>
+        <Spinner visible={load} textContent="Memproses..." />
+      </View>
       <TextInput
         label="NIP/NRP"
         returnKeyType="next"
@@ -56,9 +68,7 @@ export default function LoginScreen({navigation}) {
         error={!!id.error}
         errorText={id.error}
         autoCapitalize="none"
-        autoCompleteType="id"
-        textContentType="idAddress"
-        keyboardType="id-address"
+        keyboardType="numeric"
       />
       <TextInput
         label="Password"
@@ -69,29 +79,12 @@ export default function LoginScreen({navigation}) {
         errorText={password.error}
         secureTextEntry
       />
-      <Button mode="contained" onPress={onLoginPressed}>
-        Login
-      </Button>
+      <ActivityIndicator animating={load} color="black" />
+      {!load && (
+        <Button mode="contained" onPress={onLoginPressed}>
+          Login
+        </Button>
+      )}
     </Background>
   );
 }
-
-const styles = StyleSheet.create({
-  forgotPassword: {
-    width: '100%',
-    alignItems: 'flex-end',
-    marginBottom: 24,
-  },
-  row: {
-    flexDirection: 'row',
-    marginTop: 4,
-  },
-  forgot: {
-    fontSize: 13,
-    color: theme.colors.secondary,
-  },
-  link: {
-    fontWeight: 'bold',
-    color: theme.colors.primary,
-  },
-});
