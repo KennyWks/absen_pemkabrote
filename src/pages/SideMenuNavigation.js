@@ -6,7 +6,7 @@ import Icon from 'react-native-ico';
 import {TouchableOpacity, View} from 'react-native';
 import ProfilPegawai from './ProfilPegawaiScreen';
 import KinerjaHarian from './KinerjaHarianScreen';
-import Absen from './PetaScreen';
+import PetaScreen from './PetaScreen';
 import RakapanAbsen from './RekapanAbsenScreen';
 import {logoutAction} from '../helpers/logout';
 import {useNavigation} from '@react-navigation/native';
@@ -44,10 +44,20 @@ const SideMenuNavigation = () => {
 
       <Drawer.Screen
         name="Absen"
-        options={{
-          drawerLabel: 'Absen',
-        }}
-        component={Absen}
+        options={() => ({
+          headerRight: props => (
+            <View style={{margin: 15}}>
+              <TouchableOpacity
+                onPress={() => {
+                  logoutAction({navigation}, 'Login');
+                }}>
+                <Icon name="logout" group="miscellaneous" />
+              </TouchableOpacity>
+            </View>
+          ),
+          drawerLabel: 'Absen Hari Ini',
+        })}
+        component={PetaScreen}
       />
 
       <Drawer.Screen
@@ -70,7 +80,19 @@ const SideMenuNavigation = () => {
 
       <Drawer.Screen
         name="Rekapan Absen"
-        options={{drawerLabel: 'Rekapan Absen'}}
+        options={() => ({
+          headerRight: props => (
+            <View style={{margin: 15}}>
+              <TouchableOpacity
+                onPress={() => {
+                  logoutAction({navigation}, 'Login');
+                }}>
+                <Icon name="logout" group="miscellaneous" />
+              </TouchableOpacity>
+            </View>
+          ),
+          drawerLabel: 'Rekapan Absen',
+        })}
         component={RakapanAbsen}
       />
     </Drawer.Navigator>

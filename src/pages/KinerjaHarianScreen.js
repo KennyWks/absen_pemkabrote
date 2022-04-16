@@ -98,7 +98,7 @@ const KinerjaHarianScreen = ({navigation}) => {
                 <View style={styles.flatview}>
                   <Text style={styles.judul}>{item.judul}</Text>
                   <Text style={{fontSize: 15, color: 'green'}}>
-                    {item.status === 1 ? 'Disetujui' : 'Tidak Disetujui'}
+                    {item.status === 1 ? 'Disetujui' : 'Belum Disetujui'}
                   </Text>
                   <Text>{item.deskripsi}</Text>
                 </View>

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Alert, View, ActivityIndicator} from 'react-native';
+import {Alert, ActivityIndicator} from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -10,7 +10,6 @@ import {idValidator} from '../helpers/idValidator';
 import {passwordValidator} from '../helpers/passwordValidator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {postData} from '../helpers/CRUD';
-import Spinner from '../components/SpinnerScreen';
 
 export default function LoginScreen({navigation}) {
   const [id, setid] = useState({value: '', error: ''});
@@ -57,9 +56,6 @@ export default function LoginScreen({navigation}) {
       <BackButtonLogin />
       <Logo />
       <Header>Selamat Datang!</Header>
-      <View>
-        <Spinner visible={load} textContent="Memproses..." />
-      </View>
       <TextInput
         label="NIP/NRP"
         returnKeyType="next"

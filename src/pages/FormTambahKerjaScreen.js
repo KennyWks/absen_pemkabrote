@@ -137,7 +137,7 @@ export default function FormTambahKerjaScreen() {
               justifyContent: 'space-around',
               alignItems: 'center',
             }}>
-            <Text style={styles.textInputDate} onPress={showDatePickerMulai}>
+            <Text style={styles.textInputTime} onPress={showDatePickerMulai}>
               {mulai.value === undefined || mulai.value === ''
                 ? 'Mulai'
                 : `${mulai.value}`}
@@ -171,7 +171,7 @@ export default function FormTambahKerjaScreen() {
               justifyContent: 'space-around',
               alignItems: 'center',
             }}>
-            <Text style={styles.textInputDate} onPress={showDatePickerSelesai}>
+            <Text style={styles.textInputTime} onPress={showDatePickerSelesai}>
               {selesai.value === undefined || selesai.value === ''
                 ? 'Selesai'
                 : `${selesai.value}`}
@@ -215,7 +215,7 @@ export default function FormTambahKerjaScreen() {
 }
 
 const styles = StyleSheet.create({
-  textInputDate: {
+  textInputTime: {
     width: '80%',
     margin: 5,
     padding: 10,

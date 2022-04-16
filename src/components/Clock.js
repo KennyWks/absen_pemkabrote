@@ -8,7 +8,7 @@ export default function Clock() {
     <View style={styles.container}>
       <View style={{marginBottom: 5}} />
       <AnalogClock
-        colorClock="#2196F3"
+        colorClock="#560CCE"
         colorNumber="#000000"
         colorCenter="#00BCD4"
         colorHour="#FF8F00"

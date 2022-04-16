@@ -133,6 +133,11 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
         applicationId "com.absen_pemkabrote"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -251,6 +256,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    implementation "com.mapbox.vision:mapbox-android-vision:0.13.0"
+    implementation "com.mapbox.vision:mapbox-android-vision-ar:0.13.0"
+    implementation "com.mapbox.vision:mapbox-android-vision-safety:0.13.0"
 
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules

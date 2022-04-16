@@ -3,18 +3,22 @@ import React, {useState, useEffect} from 'react';
 import Background from '../components/Background';
 import {ScrollView} from 'react-native-gesture-handler';
 import {CardViewWithImage} from 'react-native-simple-card-view';
-import {View, Button, Text} from 'react-native';
+import {View, Text} from 'react-native';
 import {logoutAction} from '../helpers/logout';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwtDecode from 'jwt-decode';
 import Clock from '../components/Clock';
 import user from '../assets/images/user.jpg';
+import {getData} from '../helpers/CRUD';
+import moment from 'moment';
 
 export default function ProfilPegawaiScreen({navigation}) {
   const [nip, setNip] = useState('');
   const [nama, setNama] = useState('');
   const [namaJabatan, setNamaJabatan] = useState('');
   const [namaUnitKerja, setNamaUnitKerja] = useState('');
+  const [createdAt, setCreatedAt] = useState('');
+  const [updatedAt, setUpdatedAt] = useState('');
 
   let now = new Date();
   var days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
@@ -49,6 +53,19 @@ export default function ProfilPegawaiScreen({navigation}) {
       setNama(decodeToken.nama);
       setNamaJabatan(decodeToken.nama_jabatan);
       setNamaUnitKerja(decodeToken.nama_unit);
+      const response = await getData(`/absen/today/${decodeToken.users_id}`);
+      let data = [];
+      if (response.data.success) {
+        data = response.data.data[0];
+        setCreatedAt(data.created_at);
+      }
+      if (
+        response.data.success &&
+        data.latitude_keluar !== null &&
+        data.longitude_keluar !== null
+      ) {
+        setUpdatedAt(data.updated_at);
+      }
     } else {
       logoutAction();
     }
@@ -92,27 +109,43 @@ export default function ProfilPegawaiScreen({navigation}) {
                 flexDirection: 'row',
                 justifyContent: 'space-evenly',
               }}>
-              <Button
-                color="#560CCE"
-                title="Absen Masuk"
-                onPress={() => {
-                  navigation.reset({
-                    index: 0,
-                    routes: [{name: 'Peta'}],
-                  });
-                }}
-              />
+              <View
+                style={{
+                  margin: 5,
+                  padding: 10,
+                  backgroundColor: '#560CCE',
+                  borderColor: 'lightgrey',
+                  borderWidth: 1,
+                  borderRadius: 5,
+                }}>
+                <Text style={{color: 'white', textAlign: 'center'}}>
+                  Absen Masuk
+                </Text>
+                <Text style={{color: 'white', textAlign: 'center'}}>
+                  {createdAt === ''
+                    ? '-'
+                    : moment(createdAt).format('hh:mm:ss')}
+                </Text>
+              </View>
 
-              <Button
-                color="#560CCE"
-                title="Absen Keluar"
-                onPress={() => {
-                  navigation.reset({
-                    index: 0,
-                    routes: [{name: 'Peta'}],
-                  });
-                }}
-              />
+              <View
+                style={{
+                  margin: 5,
+                  padding: 10,
+                  backgroundColor: '#560CCE',
+                  borderColor: 'lightgrey',
+                  borderWidth: 1,
+                  borderRadius: 5,
+                }}>
+                <Text style={{color: 'white', textAlign: 'center'}}>
+                  Absen Keluar
+                </Text>
+                <Text style={{color: 'white', textAlign: 'center'}}>
+                  {updatedAt === ''
+                    ? '-'
+                    : moment(updatedAt).format('hh:mm:ss')}
+                </Text>
+              </View>
             </View>
             <Clock />
             <View

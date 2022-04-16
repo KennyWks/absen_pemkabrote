@@ -144,7 +144,15 @@ const RekapanAbsenScreen = () => {
                 <View style={styles.flatview}>
                   <Text style={styles.judul}>Absen</Text>
                   <Text>
+                    Masuk :{' '}
                     {moment(item.created_at).format('DD-MM-YYYY hh:mm:ss')}
+                  </Text>
+                  <Text>
+                    Keluar :{' '}
+                    {item.latitude_keluar === null ||
+                    item.longitude_keluar === null
+                      ? ''
+                      : moment(item.update_at).format('DD-MM-YYYY hh:mm:ss')}
                   </Text>
                 </View>
               </View>
