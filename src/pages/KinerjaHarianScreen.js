@@ -36,7 +36,7 @@ const KinerjaHarianScreen = ({navigation}) => {
         Alert.alert(response.data.message);
       }
     } catch (error) {
-      Alert.alert(error.response.status);
+      Alert.alert('Error:', JSON.stringify(error.response.status));
       // console.log(error.response);
     }
     setLoad(false);
@@ -84,7 +84,7 @@ const KinerjaHarianScreen = ({navigation}) => {
                   }}>
                   <TouchableOpacity
                     onPress={() => {
-                      navigation.navigate('Ubah Kegiatan', {
+                      navigation.push('Ubah Kegiatan', {
                         pekerjaan_id: item.pekerjaan_id,
                         judul_kegiatan: item.judul,
                         deskripsi_kegiatan: item.deskripsi,

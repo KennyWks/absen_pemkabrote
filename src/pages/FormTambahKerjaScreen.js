@@ -70,7 +70,7 @@ export default function FormTambahKerjaScreen() {
         setSelesai({value: '', error: ''});
       }
     } catch (error) {
-      Alert.alert(error.response.status);
+      Alert.alert('Error:', JSON.stringify(error.response.status));
       // console.log(error.response);
     }
     setLoad(false);
@@ -146,10 +146,10 @@ export default function FormTambahKerjaScreen() {
               style={{width: '10%'}}
               onPress={showDatePickerMulai}>
               <Icon
-                name="calendar"
+                name="time-management"
+                group="miscellaneous"
                 height="30"
                 width="30"
-                group="miscellaneous"
               />
             </TouchableOpacity>
           </View>
@@ -180,10 +180,10 @@ export default function FormTambahKerjaScreen() {
               style={{width: '10%'}}
               onPress={showDatePickerSelesai}>
               <Icon
-                name="calendar"
+                name="time-management"
+                group="miscellaneous"
                 height="30"
                 width="30"
-                group="miscellaneous"
               />
             </TouchableOpacity>
           </View>

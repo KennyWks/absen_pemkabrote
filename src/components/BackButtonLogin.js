@@ -10,7 +10,7 @@ import {getStatusBarHeight} from 'react-native-status-bar-height';
 
 export default function BackButton() {
   const backPressed = () => {
-    Alert.alert('Uppsss!', 'Anda yakin ingin keluar?', [
+    Alert.alert('Uppsss!', 'Anda yakin ingin keluar aplikasi?', [
       {
         text: 'Batal',
         onPress: () => null,

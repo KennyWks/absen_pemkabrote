@@ -3,7 +3,7 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import Icon from 'react-native-ico';
-import {TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View, Alert} from 'react-native';
 import ProfilPegawai from './ProfilPegawaiScreen';
 import KinerjaHarian from './KinerjaHarianScreen';
 import PetaScreen from './PetaScreen';
@@ -32,7 +32,18 @@ const SideMenuNavigation = () => {
             <View style={{margin: 15}}>
               <TouchableOpacity
                 onPress={() => {
-                  logoutAction({navigation}, 'Login');
+                  Alert.alert('Uppsss!', 'Anda yakin ingin keluar dari akun?', [
+                    {
+                      text: 'Batal',
+                      onPress: () => null,
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Ya',
+                      onPress: () => logoutAction({navigation}, 'Login'),
+                    },
+                  ]);
+                  return true;
                 }}>
                 <Icon name="logout" group="miscellaneous" />
               </TouchableOpacity>
@@ -49,7 +60,18 @@ const SideMenuNavigation = () => {
             <View style={{margin: 15}}>
               <TouchableOpacity
                 onPress={() => {
-                  logoutAction({navigation}, 'Login');
+                  Alert.alert('Uppsss!', 'Anda yakin ingin keluar dari akun?', [
+                    {
+                      text: 'Batal',
+                      onPress: () => null,
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Ya',
+                      onPress: () => logoutAction({navigation}, 'Login'),
+                    },
+                  ]);
+                  return true;
                 }}>
                 <Icon name="logout" group="miscellaneous" />
               </TouchableOpacity>
@@ -85,7 +107,18 @@ const SideMenuNavigation = () => {
             <View style={{margin: 15}}>
               <TouchableOpacity
                 onPress={() => {
-                  logoutAction({navigation}, 'Login');
+                  Alert.alert('Uppsss!', 'Anda yakin ingin keluar dari akun?', [
+                    {
+                      text: 'Batal',
+                      onPress: () => null,
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Ya',
+                      onPress: () => logoutAction({navigation}, 'Login'),
+                    },
+                  ]);
+                  return true;
                 }}>
                 <Icon name="logout" group="miscellaneous" />
               </TouchableOpacity>

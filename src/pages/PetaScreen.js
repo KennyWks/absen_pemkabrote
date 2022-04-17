@@ -1,3 +1,4 @@
+/* eslint-disable handle-callback-err */
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {StyleSheet, View, Button, Alert, ActivityIndicator} from 'react-native';
@@ -47,8 +48,8 @@ export default class App extends Component {
         // console.log(granted);
       })
       .catch(err => {
-        console.warn(err);
         Alert.alert('Error!');
+        // console.warn(err);
       });
   }
 
@@ -70,7 +71,7 @@ export default class App extends Component {
         await AsyncStorage.setItem('absen_id', response.data.absen_id);
       }
     } catch (error) {
-      Alert.alert(error.response.status);
+      Alert.alert('Error:', JSON.stringify(error.response.status));
       // console.log(error.response);
     }
     this.setState(prevState => ({
@@ -98,7 +99,7 @@ export default class App extends Component {
       }
     } catch (error) {
       Alert.alert('Error:', JSON.stringify(error.response.status));
-      console.log(error.response);
+      // console.log(error.response);
     }
     this.setState(prevState => ({
       ...prevState,
@@ -115,7 +116,7 @@ export default class App extends Component {
             style={styles.map}
             zoomEnabled={true}
             logoEnabled={false}>
-            <MapboxGL.MarkerView coordinate={this.state.coordinates} />
+            {/* <MapboxGL.MarkerView coordinate={this.state.coordinates} /> */}
             <MapboxGL.UserLocation
               visible={true}
               onUpdate={location => {

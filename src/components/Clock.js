@@ -1,9 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useRef, useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import AnalogClock from 'react-native-clock-analog';
 
 export default function Clock() {
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => (isMounted.current = false);
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={{marginBottom: 5}} />

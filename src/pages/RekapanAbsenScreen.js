@@ -73,7 +73,7 @@ const RekapanAbsenScreen = () => {
         Alert.alert(response.data.message);
       }
     } catch (error) {
-      Alert.alert(error.response.status);
+      Alert.alert('Error:', JSON.stringify(error.response.status));
       // console.log(error.response);
     }
     setLoad(false);

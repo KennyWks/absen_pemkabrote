@@ -45,7 +45,7 @@ export default function LoginScreen({navigation}) {
         setPassword({value: ''});
       }
     } catch (error) {
-      Alert.alert(error.response.status);
+      Alert.alert('Error:', JSON.stringify(error.response.status));
       // console.log(error.response);
     }
     setLoad(false);

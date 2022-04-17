@@ -91,6 +91,7 @@ export default function ProfilPegawaiScreen({navigation}) {
               flexDirection: 'column',
             }}>
             <CardViewWithImage
+              key={nip}
               width={300}
               content={`${namaJabatan} \n ${namaUnitKerja} \n NIP :${nip}`}
               source={user}
@@ -161,7 +162,7 @@ export default function ProfilPegawaiScreen({navigation}) {
                   fontSize: 20,
                   fontWeight: 'bold',
                 }}>
-                {`${day}, ${now.getDay()} ${month} ${now.getFullYear()}`}
+                {`${day}, ${now.getDate()} ${month} ${now.getFullYear()}`}
               </Text>
             </View>
           </View>
