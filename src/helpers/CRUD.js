@@ -1,7 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const ApiURL = 'http://192.168.167.60:8000/api';
+export const ApiURL = 'http://192.168.48.60:8000/api';
 
 const header = {
   'Content-Type': 'multipart/form-data',

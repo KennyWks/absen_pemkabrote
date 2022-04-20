@@ -15,6 +15,7 @@ import jwtDecode from 'jwt-decode';
 import Icon from 'react-native-ico';
 import {Dropdown} from 'react-native-element-dropdown';
 import moment from 'moment';
+import 'moment/locale/id';
 
 const monthData = [
   {label: 'Januari', value: '01'},
@@ -132,20 +133,27 @@ const RekapanAbsenScreen = () => {
             renderItem={({item}) => (
               <View
                 style={{
-                  width: '100%',
+                  width: '90%',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
                   flexDirection: 'row',
-                  marginLeft: 20,
+                  marginLeft: 10,
+                  borderColor: 'gray',
+                  borderWidth: 0.7,
+                  borderRadius: 3,
+                  padding: 5,
                 }}>
-                <TouchableOpacity>
+                <TouchableOpacity style={{margin: 5}}>
                   <Icon name="map-placeholder" group="material-design" />
                 </TouchableOpacity>
                 <View style={styles.flatview}>
-                  <Text style={styles.judul}>Absen</Text>
+                  <Text style={styles.judul}>
+                    {moment(item.created_at)
+                      .locale('id')
+                      .format('dddd, DD MMMM YYYY')}
+                  </Text>
                   <Text>
-                    Masuk :{' '}
-                    {moment(item.created_at).format('DD-MM-YYYY hh:mm:ss')}
+                    Masuk : {moment(item.created_at).format('hh:mm:ss')}
                   </Text>
                   <Text>
                     Keluar :{' '}
@@ -168,7 +176,7 @@ const RekapanAbsenScreen = () => {
 const styles = StyleSheet.create({
   flatview: {
     justifyContent: 'center',
-    paddingTop: 25,
+    paddingTop: 5,
     borderRadius: 2,
   },
   judul: {

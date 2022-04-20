@@ -80,7 +80,6 @@ const KinerjaHarianScreen = ({navigation}) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     flexDirection: 'column',
-                    marginRight: 10,
                   }}>
                   <TouchableOpacity
                     onPress={() => {
@@ -92,13 +91,28 @@ const KinerjaHarianScreen = ({navigation}) => {
                         selesai_kegiatan: item.selesai,
                       });
                     }}>
-                    <Icon name="edit" group="basic" height="25" width="25" />
+                    <Icon
+                      name="font-selection-editor"
+                      group="font-awesome"
+                      height="30"
+                      width="30"
+                    />
                   </TouchableOpacity>
                 </View>
                 <View style={styles.flatview}>
-                  <Text style={styles.judul}>{item.judul}</Text>
-                  <Text style={{fontSize: 15, color: 'green'}}>
-                    {item.status === 1 ? 'Disetujui' : 'Belum Disetujui'}
+                  <Text style={styles.judul}>
+                    {item.judul}{' '}
+                    {item.status === 1 && (
+                      <Icon
+                        style={{
+                          margin: 5,
+                        }}
+                        name="circle-with-check-symbol"
+                        group="material-design"
+                        height="18"
+                        width="18"
+                      />
+                    )}
                   </Text>
                   <Text>{item.deskripsi}</Text>
                 </View>

@@ -1,3 +1,4 @@
+/* eslint-disable react/self-closing-comp */
 /* eslint-disable handle-callback-err */
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
@@ -27,7 +28,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      coordinates: [-73.99155, 40.73581],
+      coordinates: [73.20812, 22.29941],
       loadIn: false,
       loadOut: false,
     };
@@ -112,13 +113,11 @@ export default class App extends Component {
     return (
       <View style={styles.page}>
         <View style={styles.container}>
-          <MapboxGL.MapView
-            style={styles.map}
-            zoomEnabled={true}
-            logoEnabled={false}>
-            {/* <MapboxGL.MarkerView coordinate={this.state.coordinates} /> */}
+          <MapboxGL.MapView style={styles.map} zoomEnabled={true}>
+            <MapboxGL.MarkerView coordinate={this.state.coordinates} />
+            {/* <MapboxGL.PointAnnotation coordinate={this.state.coordinates} /> */}
             <MapboxGL.UserLocation
-              visible={true}
+              showsUserHeadingIndicator={true}
               onUpdate={location => {
                 this.setState(prevState => ({
                   ...prevState,
@@ -136,6 +135,7 @@ export default class App extends Component {
               animationDuration={1000}
             />
           </MapboxGL.MapView>
+
           <View
             style={{
               width: '100%',
