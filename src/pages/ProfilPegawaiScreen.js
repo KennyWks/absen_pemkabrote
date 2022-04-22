@@ -102,7 +102,6 @@ export default function ProfilPegawaiScreen({navigation}) {
               roundedImageValue={50}
               imageMargin={{top: 10}}
               contentTextAlign={'center'}
-              shadowRadius={8}
             />
 
             <View
