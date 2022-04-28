@@ -5,7 +5,7 @@ export default class ErrorScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Sorry! Please try again</Text>
+        <Text>Maaf! Aplikasi tidak bisa dibuka</Text>
       </View>
     );
   }

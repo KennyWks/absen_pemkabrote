@@ -118,8 +118,8 @@ export default function FormUbahKerjaScreen({route, navigation}) {
   };
 
   return (
-    <ScrollView>
-      <Background>
+    <Background>
+      <ScrollView>
         <View
           style={{
             width: '98%',
@@ -152,7 +152,7 @@ export default function FormUbahKerjaScreen({route, navigation}) {
               justifyContent: 'space-around',
               alignItems: 'center',
             }}>
-            <Text style={styles.textInputDate} onPress={showDatePickerMulai}>
+            <Text style={styles.textInputTime} onPress={showDatePickerMulai}>
               {mulai.value === undefined || mulai.value === ''
                 ? 'Mulai'
                 : `${mulai.value}`}
@@ -186,7 +186,7 @@ export default function FormUbahKerjaScreen({route, navigation}) {
               justifyContent: 'space-around',
               alignItems: 'center',
             }}>
-            <Text style={styles.textInputDate} onPress={showDatePickerSelesai}>
+            <Text style={styles.textInputTime} onPress={showDatePickerSelesai}>
               {selesai.value === undefined || selesai.value === ''
                 ? 'Selesai'
                 : `${selesai.value}`}
@@ -224,21 +224,22 @@ export default function FormUbahKerjaScreen({route, navigation}) {
             </Button>
           )}
         </View>
-      </Background>
-    </ScrollView>
+      </ScrollView>
+    </Background>
   );
 }
 
 const styles = StyleSheet.create({
-  textInputDate: {
+  textInputTime: {
     width: '80%',
     margin: 5,
     padding: 10,
     justifyContent: 'flex-start',
-    color: 'lightgrey',
+    color: 'black',
     borderColor: 'lightgrey',
     borderWidth: 1,
     borderRadius: 5,
+    backgroundColor: 'white',
   },
   smallText: {
     fontSize: 11,

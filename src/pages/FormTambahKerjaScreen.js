@@ -103,8 +103,8 @@ export default function FormTambahKerjaScreen() {
   };
 
   return (
-    <ScrollView>
-      <Background>
+    <Background>
+      <ScrollView>
         <View
           style={{
             width: '98%',
@@ -209,8 +209,8 @@ export default function FormTambahKerjaScreen() {
             </Button>
           )}
         </View>
-      </Background>
-    </ScrollView>
+      </ScrollView>
+    </Background>
   );
 }
 
@@ -220,10 +220,11 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 10,
     justifyContent: 'flex-start',
-    color: 'lightgrey',
+    color: 'black',
     borderColor: 'lightgrey',
     borderWidth: 1,
     borderRadius: 5,
+    backgroundColor: 'white',
   },
   smallText: {
     fontSize: 11,

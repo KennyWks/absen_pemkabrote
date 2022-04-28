@@ -123,7 +123,12 @@ const RekapanAbsenScreen = () => {
               alignItems: 'flex-start',
               flexDirection: 'row',
             }}>
-            <Text>Data Kosong</Text>
+            <Text
+              style={{
+                color: 'black',
+              }}>
+              Data Kosong
+            </Text>
           </View>
         )}
         {!load && dataAbsen.length > 0 && (
@@ -193,6 +198,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderRadius: 8,
     paddingHorizontal: 8,
+    color: 'black',
   },
   icon: {
     marginRight: 5,
@@ -205,12 +211,15 @@ const styles = StyleSheet.create({
     zIndex: 999,
     paddingHorizontal: 8,
     fontSize: 14,
+    color: 'black',
   },
   placeholderStyle: {
     fontSize: 16,
+    color: 'black',
   },
   selectedTextStyle: {
     fontSize: 16,
+    color: 'black',
   },
   iconStyle: {
     width: 20,
@@ -219,6 +228,7 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+    color: 'black',
   },
 });
 

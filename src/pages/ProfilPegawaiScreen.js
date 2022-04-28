@@ -2,13 +2,12 @@
 import React, {useState, useEffect} from 'react';
 import Background from '../components/Background';
 import {ScrollView} from 'react-native-gesture-handler';
-import {CardViewWithImage} from 'react-native-simple-card-view';
-import {View, Text} from 'react-native';
+import CardView from 'react-native-cardview';
+import {View, Text, StyleSheet} from 'react-native';
 import {logoutAction} from '../helpers/logout';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwtDecode from 'jwt-decode';
 import Clock from '../components/Clock';
-import user from '../assets/images/user.jpg';
 import {getData} from '../helpers/CRUD';
 import moment from 'moment';
 
@@ -42,6 +41,7 @@ export default function ProfilPegawaiScreen({navigation}) {
 
   useEffect(() => {
     checkToken();
+    console.log(namaUnitKerja);
   }, []);
 
   const checkToken = async () => {
@@ -80,94 +80,101 @@ export default function ProfilPegawaiScreen({navigation}) {
             height: '100%',
             justifyContent: 'flex-start',
             alignItems: 'center',
-            flexDirection: 'row',
+            flexDirection: 'column',
           }}>
+          <CardView
+            cardElevation={1}
+            cardMaxElevation={1}
+            cornerRadius={5}
+            style={styles.card}>
+            <Text
+              style={{
+                textAlign: 'center',
+                margin: 10,
+                fontSize: 25,
+                color: 'black',
+              }}>
+              Selamat Datang!
+            </Text>
+            <Text style={styles.text}>{nama}</Text>
+            <Text style={styles.text}>{nip}</Text>
+            <Text style={styles.text}>{namaJabatan}</Text>
+          </CardView>
           <View
             style={{
               width: '100%',
-              height: '100%',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'column',
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
             }}>
-            <CardViewWithImage
-              key={nip}
-              width={300}
-              content={`${namaJabatan} \n ${namaUnitKerja} \n NIP :${nip}`}
-              source={user}
-              title={`${nama}`}
-              imageWidth={100}
-              imageHeight={100}
-              roundedImage={true}
-              roundedImageValue={50}
-              imageMargin={{top: 10}}
-              contentTextAlign={'center'}
-            />
-
             <View
               style={{
-                width: '100%',
-                flexDirection: 'row',
-                justifyContent: 'space-evenly',
-              }}>
-              <View
-                style={{
-                  margin: 5,
-                  padding: 10,
-                  backgroundColor: '#560CCE',
-                  borderColor: 'lightgrey',
-                  borderWidth: 1,
-                  borderRadius: 5,
-                }}>
-                <Text style={{color: 'white', textAlign: 'center'}}>
-                  Absen Masuk
-                </Text>
-                <Text style={{color: 'white', textAlign: 'center'}}>
-                  {createdAt === ''
-                    ? '-'
-                    : moment(createdAt).format('hh:mm:ss')}
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  margin: 5,
-                  padding: 10,
-                  backgroundColor: '#560CCE',
-                  borderColor: 'lightgrey',
-                  borderWidth: 1,
-                  borderRadius: 5,
-                }}>
-                <Text style={{color: 'white', textAlign: 'center'}}>
-                  Absen Keluar
-                </Text>
-                <Text style={{color: 'white', textAlign: 'center'}}>
-                  {updatedAt === ''
-                    ? '-'
-                    : moment(updatedAt).format('hh:mm:ss')}
-                </Text>
-              </View>
-            </View>
-            <Clock />
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                width: '100%',
                 margin: 5,
+                padding: 10,
+                backgroundColor: '#560CCE',
+                borderColor: 'lightgrey',
+                borderWidth: 1,
+                borderRadius: 5,
               }}>
-              <Text
-                style={{
-                  fontFamily: 'Helvetica',
-                  fontSize: 20,
-                  fontWeight: 'bold',
-                }}>
-                {`${day}, ${now.getDate()} ${month} ${now.getFullYear()}`}
+              <Text style={{color: 'white', textAlign: 'center'}}>
+                Absen Masuk
+              </Text>
+              <Text style={{color: 'white', textAlign: 'center'}}>
+                {createdAt === '' ? '-' : moment(createdAt).format('hh:mm:ss')}
               </Text>
             </View>
+
+            <View
+              style={{
+                margin: 5,
+                padding: 10,
+                backgroundColor: '#560CCE',
+                borderColor: 'lightgrey',
+                borderWidth: 1,
+                borderRadius: 5,
+              }}>
+              <Text style={{color: 'white', textAlign: 'center'}}>
+                Absen Keluar
+              </Text>
+              <Text style={{color: 'white', textAlign: 'center'}}>
+                {updatedAt === '' ? '-' : moment(updatedAt).format('hh:mm:ss')}
+              </Text>
+            </View>
+          </View>
+          <Clock />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              width: '100%',
+              margin: 5,
+            }}>
+            <Text
+              style={{
+                fontFamily: 'Helvetica',
+                fontSize: 20,
+                fontWeight: 'bold',
+              }}>
+              {`${day}, ${now.getDate()} ${month} ${now.getFullYear()}`}
+            </Text>
           </View>
         </View>
       </ScrollView>
     </Background>
   );
 }
+
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    width: '90%',
+    margin: 10,
+  },
+  text: {
+    textAlign: 'center',
+    margin: 5,
+    color: 'black',
+  },
+});

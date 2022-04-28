@@ -261,6 +261,8 @@ dependencies {
     implementation "com.mapbox.vision:mapbox-android-vision-ar:0.13.0"
     implementation "com.mapbox.vision:mapbox-android-vision-safety:0.13.0"
 
+    implementation project(':react-native-cardview')
+    
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 

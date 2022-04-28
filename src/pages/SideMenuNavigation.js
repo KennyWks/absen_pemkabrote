@@ -10,6 +10,7 @@ import PetaScreen from './PetaScreen';
 import RakapanAbsen from './RekapanAbsenScreen';
 import {logoutAction} from '../helpers/logout';
 import {useNavigation} from '@react-navigation/native';
+import CustomSidebarMenu from '../components/CustomSidebarMenu';
 
 const Drawer = createDrawerNavigator();
 
@@ -22,8 +23,7 @@ const SideMenuNavigation = () => {
         activeTintColor: '#e91e63',
         itemStyle: {marginVertical: 5},
       }}
-      // drawerContent={props => <CustomSidebarMenu {...props} />}
-    >
+      drawerContent={props => <CustomSidebarMenu {...props} />}>
       <Drawer.Screen
         name="Profil Pegawai"
         component={ProfilPegawai}

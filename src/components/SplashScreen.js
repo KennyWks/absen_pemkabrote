@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Image} from 'react-native';
-import Splash from '../assets/images/splash.jpg';
+import Logo from '../components/Logo';
 
 export default class SplashScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image source={Splash} style={styles.splash} />
+        <Logo />
       </View>
     );
   }
@@ -18,9 +18,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  splash: {
-    width: '100%',
-    height: '100%',
+    backgroundColor: 'white',
   },
 });

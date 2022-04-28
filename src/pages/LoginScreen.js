@@ -55,7 +55,7 @@ export default function LoginScreen({navigation}) {
     <Background>
       <BackButtonLogin />
       <Logo />
-      <Header>Selamat Datang!</Header>
+      <Header>Silahkan login</Header>
       <TextInput
         label="NIP/NRP"
         returnKeyType="next"

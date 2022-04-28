@@ -11,7 +11,10 @@ export const logoutAction = async (props, page) => {
     }, 500);
     Alert.alert(response.data.message);
   } catch (error) {
-    Alert.alert(error.data);
     // console.log(error);
+    setTimeout(() => {
+      props.navigation.push(page);
+    }, 500);
+    Alert.alert(error.data);
   }
 };

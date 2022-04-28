@@ -96,7 +96,7 @@ export default class App extends Component {
         Alert.alert(response.data.message);
         await AsyncStorage.removeItem('absen_id');
       } else {
-        Alert.alert('Proses Absen Keluar Sudah Diproses');
+        Alert.alert('Proses Absen Keluar Tidak Dapat Diproses');
       }
     } catch (error) {
       Alert.alert('Error:', JSON.stringify(error.response.status));
@@ -108,24 +108,30 @@ export default class App extends Component {
     }));
   };
 
+  setLocationOnMap = location => {
+    this.setState(prevState => ({
+      ...prevState,
+      coordinates: [location.coords.latitude, location.coords.longitude],
+    }));
+  };
+
   render() {
     const {loadIn, loadOut} = this.state;
     return (
       <View style={styles.page}>
         <View style={styles.container}>
-          <MapboxGL.MapView style={styles.map} zoomEnabled={true}>
+          <MapboxGL.MapView
+            style={styles.map}
+            zoomEnabled={true}
+            onUserLocationUpdate={location => {
+              this.setLocationOnMap(location);
+            }}>
             <MapboxGL.MarkerView coordinate={this.state.coordinates} />
             {/* <MapboxGL.PointAnnotation coordinate={this.state.coordinates} /> */}
             <MapboxGL.UserLocation
               showsUserHeadingIndicator={true}
               onUpdate={location => {
-                this.setState(prevState => ({
-                  ...prevState,
-                  coordinates: [
-                    location.coords.latitude,
-                    location.coords.longitude,
-                  ],
-                }));
+                this.setLocationOnMap(location);
               }}
             />
             <MapboxGL.Camera

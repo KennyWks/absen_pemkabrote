@@ -8,6 +8,7 @@ import {createStore, applyMiddleware} from 'redux';
 import rootReducer from './src/redux/reducer/globalReducer';
 import thunk from 'redux-thunk';
 import {LogBox} from 'react-native';
+import JailMonkey from 'jail-monkey';
 
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
@@ -26,13 +27,15 @@ export default class App extends Component {
   componentDidMount() {
     setTimeout(() => {
       if (true) {
-        this.setState({
-          view: <Navigation />,
-        });
-      } else {
-        this.setState({
-          view: <Error />,
-        });
+        if (JailMonkey.isJailBroken()) {
+          this.setState({
+            view: <Error />,
+          });
+        } else {
+          this.setState({
+            view: <Navigation />,
+          });
+        }
       }
     }, 2000);
   }
