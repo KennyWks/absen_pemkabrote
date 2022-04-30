@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Alert, ActivityIndicator} from 'react-native';
+import {Alert, ActivityIndicator, BackHandler} from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -19,15 +19,32 @@ export default function LoginScreen({navigation}) {
 
   useEffect(() => {
     checkToken();
+    BackHandler.addEventListener('hardwareBackPress', () => checkBackHandler());
   }, []);
 
+  const checkBackHandler = () => {
+    Alert.alert('Uppsss!', 'Anda yakin ingin keluar aplikasi?', [
+      {
+        text: 'Batal',
+        onPress: () => null,
+        style: 'cancel',
+      },
+      {text: 'Ya', onPress: () => BackHandler.exitApp()},
+    ]);
+    return true;
+  };
+
   const checkToken = async () => {
+    setLoad(true);
     const token = await AsyncStorage.getItem('accessToken');
-    const decodeToken = jwtDecode(token);
-    const dateNow = new Date();
-    if (decodeToken.exp < dateNow.getTime()) {
-      navigation.push('Dashboard');
+    if (token) {
+      const decodeToken = jwtDecode(token);
+      const dateNow = new Date();
+      if (decodeToken.exp < dateNow.getTime()) {
+        navigation.push('Dashboard');
+      }
     }
+    setLoad(false);
   };
 
   const onLoginPressed = () => {

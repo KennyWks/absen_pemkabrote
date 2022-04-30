@@ -12,6 +12,7 @@ export const logoutAction = async (props, page) => {
     Alert.alert(response.data.message);
   } catch (error) {
     // console.log(error);
+    await AsyncStorage.removeItem('accessToken');
     setTimeout(() => {
       props.navigation.push(page);
     }, 500);

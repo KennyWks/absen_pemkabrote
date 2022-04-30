@@ -27,13 +27,15 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      coordinates: [73.20812, 22.29941],
+      coordinates: [-73.98330688476561, 40.76975180901395],
       loadIn: false,
       loadOut: false,
+      firstTime: '',
+      lastTime: '',
     };
   }
 
-  componentDidMount() {
+  requestLocationPermission = () => {
     PermissionsAndroid.requestMultiple(
       [
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
@@ -45,39 +47,47 @@ export default class App extends Component {
       },
     )
       .then(granted => {
-        // console.log(granted);
+        this.camera.moveTo(this.state.coordinates, 200);
       })
       .catch(err => {
-        Alert.alert('Error!');
+        Alert.alert('Pastikan GPS anda dalam keadaan hidup!');
         // console.warn(err);
       });
+  };
+
+  componentDidMount() {
+    this.requestLocationPermission();
   }
 
   submitLocationIn = async () => {
-    this.setState(prevState => ({
-      ...prevState,
-      loadIn: true,
-    }));
-    const token = await AsyncStorage.getItem('accessToken');
-    const decodeToken = jwtDecode(token);
-    try {
-      const response = await postData('/absen', {
-        users_id: decodeToken.users_id,
-        latitude_masuk: this.state.coordinates[0],
-        longitude_masuk: this.state.coordinates[1],
-      });
-      Alert.alert(response.data.message);
-      if (response.data.status !== 403) {
-        await AsyncStorage.setItem('absen_id', response.data.absen_id);
+    if (this.state.firstTime !== this.state.lastTime) {
+      this.setState(prevState => ({
+        ...prevState,
+        loadIn: true,
+      }));
+      const token = await AsyncStorage.getItem('accessToken');
+      const decodeToken = jwtDecode(token);
+      try {
+        const response = await postData('/absen', {
+          users_id: decodeToken.users_id,
+          latitude_masuk: this.state.coordinates[0],
+          longitude_masuk: this.state.coordinates[1],
+        });
+        Alert.alert(response.data.message);
+        if (response.data.status !== 403) {
+          await AsyncStorage.setItem('absen_id', response.data.absen_id);
+        }
+      } catch (error) {
+        Alert.alert('Error:', JSON.stringify(error.response.status));
+        // console.log(error.response);
       }
-    } catch (error) {
-      Alert.alert('Error:', JSON.stringify(error.response.status));
-      // console.log(error.response);
+      this.setState(prevState => ({
+        ...prevState,
+        loadIn: false,
+      }));
+    } else {
+      Alert.alert('Error!');
     }
-    this.setState(prevState => ({
-      ...prevState,
-      loadIn: false,
-    }));
   };
 
   submitLocationOut = async () => {
@@ -125,8 +135,6 @@ export default class App extends Component {
             onUserLocationUpdate={location => {
               this.setLocationOnMap(location);
             }}>
-            <MapboxGL.MarkerView coordinate={this.state.coordinates} />
-            {/* <MapboxGL.PointAnnotation coordinate={this.state.coordinates} /> */}
             <MapboxGL.UserLocation
               showsUserHeadingIndicator={true}
               onUpdate={location => {
@@ -134,10 +142,24 @@ export default class App extends Component {
               }}
             />
             <MapboxGL.Camera
-              followZoomLevel={8} //followUserLocation
-              followUserMode={'normal'}
+              followZoomLevel={15} //followUserLocation
               followUserLocation={true}
+              followUserMode={'normal'}
               animationDuration={1000}
+              pitch={50}
+              centerCoordinate={this.state.coordinates}
+              onUserTrackingModeChange={e => {
+                this.setState(prevState => ({
+                  ...prevState,
+                  firstTime: e.timeStamp,
+                }));
+                setTimeout(() => {
+                  this.setState(prevState => ({
+                    ...prevState,
+                    lastTime: e.timeStamp,
+                  }));
+                }, 1000);
+              }}
             />
           </MapboxGL.MapView>
 
