@@ -41,7 +41,6 @@ export default function ProfilPegawaiScreen({navigation}) {
 
   useEffect(() => {
     checkToken();
-    console.log(namaUnitKerja);
   }, []);
 
   const checkToken = async () => {
@@ -99,6 +98,7 @@ export default function ProfilPegawaiScreen({navigation}) {
             <Text style={styles.text}>{nama}</Text>
             <Text style={styles.text}>{nip}</Text>
             <Text style={styles.text}>{namaJabatan}</Text>
+            <Text style={styles.text}>{namaUnitKerja}</Text>
           </CardView>
           <View
             style={{

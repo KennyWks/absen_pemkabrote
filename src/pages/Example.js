@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, Text} from 'react-native';
 
@@ -10,8 +11,7 @@ const Example = () => {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-      Example
-      <Text></Text>
+      <Text>Example</Text>
     </View>
   );
 };

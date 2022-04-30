@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Alert, ActivityIndicator} from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
@@ -9,12 +9,26 @@ import BackButtonLogin from '../components/BackButtonLogin';
 import {idValidator} from '../helpers/idValidator';
 import {passwordValidator} from '../helpers/passwordValidator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import jwtDecode from 'jwt-decode';
 import {postData} from '../helpers/CRUD';
 
 export default function LoginScreen({navigation}) {
   const [id, setid] = useState({value: '', error: ''});
   const [password, setPassword] = useState({value: '', error: ''});
   const [load, setLoad] = useState(false);
+
+  useEffect(() => {
+    checkToken();
+  }, []);
+
+  const checkToken = async () => {
+    const token = await AsyncStorage.getItem('accessToken');
+    const decodeToken = jwtDecode(token);
+    const dateNow = new Date();
+    if (decodeToken.exp < dateNow.getTime()) {
+      navigation.push('Dashboard');
+    }
+  };
 
   const onLoginPressed = () => {
     const idError = idValidator(id.value);

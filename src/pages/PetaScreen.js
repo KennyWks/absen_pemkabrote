@@ -1,4 +1,3 @@
-/* eslint-disable react/self-closing-comp */
 /* eslint-disable handle-callback-err */
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';

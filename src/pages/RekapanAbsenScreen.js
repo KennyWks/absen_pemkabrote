@@ -157,10 +157,10 @@ const RekapanAbsenScreen = () => {
                       .locale('id')
                       .format('dddd, DD MMMM YYYY')}
                   </Text>
-                  <Text>
+                  <Text style={styles.absenTime}>
                     Masuk : {moment(item.created_at).format('hh:mm:ss')}
                   </Text>
-                  <Text>
+                  <Text style={styles.absenTime}>
                     Keluar :{' '}
                     {item.latitude_keluar === null ||
                     item.longitude_keluar === null
@@ -191,6 +191,9 @@ const styles = StyleSheet.create({
   },
   container: {
     padding: 16,
+  },
+  absenTime: {
+    color: 'black',
   },
   dropdown: {
     height: 50,
