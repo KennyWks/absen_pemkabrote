@@ -1,30 +1,13 @@
 import React from 'react';
-import {
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-  Alert,
-  BackHandler,
-} from 'react-native';
+import {TouchableOpacity, Image, StyleSheet} from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {notifyBackHandler} from '../helpers/notifyBackHandler';
 
 export default function BackButton() {
-  const backPressed = () => {
-    Alert.alert('Uppsss!', 'Anda yakin ingin keluar aplikasi?', [
-      {
-        text: 'Batal',
-        onPress: () => null,
-        style: 'cancel',
-      },
-      {text: 'Ya', onPress: () => BackHandler.exitApp()},
-    ]);
-    return true;
-  };
-
   return (
     <TouchableOpacity
       onPress={() => {
-        backPressed();
+        notifyBackHandler();
       }}
       style={styles.container}>
       <Image

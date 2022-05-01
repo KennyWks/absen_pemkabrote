@@ -1,13 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {
-  SafeAreaView,
-  View,
-  StyleSheet,
-  Image,
-  Text,
-  Linking,
-} from 'react-native';
+import {SafeAreaView, StyleSheet, Image, Text} from 'react-native';
 import MamboiLogo from '../assets/images/mamboi.png';
 import {
   DrawerContentScrollView,
@@ -17,7 +10,6 @@ import {
 const CustomSidebarMenu = props => {
   return (
     <SafeAreaView style={{flex: 1}}>
-      {/*Top Large Image */}
       <Image source={MamboiLogo} style={styles.sideMenuProfileIcon} />
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
@@ -28,7 +20,7 @@ const CustomSidebarMenu = props => {
           textAlign: 'center',
           color: 'grey',
         }}>
-        Hak Cipta Milik Tim Pengembang Mamboi
+        Hak Cipta Oleh Developer Mamboi
       </Text>
     </SafeAreaView>
   );

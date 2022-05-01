@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {getData} from '../helpers/CRUD';
+import Background from '../components/Background';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwtDecode from 'jwt-decode';
 import Icon from 'react-native-ico';
@@ -32,7 +33,7 @@ const monthData = [
   {label: 'Desember', value: '12'},
 ];
 
-const RekapanAbsenScreen = () => {
+export default function RekapanAbsenScreen() {
   const [dataAbsen, setDataAbsen] = useState({});
   const [load, setLoad] = useState(false);
   const [value, setValue] = useState(null);
@@ -75,13 +76,12 @@ const RekapanAbsenScreen = () => {
       }
     } catch (error) {
       Alert.alert('Error:', JSON.stringify(error.response.status));
-      // console.log(error.response);
     }
     setLoad(false);
   };
 
   return (
-    <View>
+    <Background>
       <View style={styles.container}>
         {renderLabel()}
         <Dropdown
@@ -174,9 +174,9 @@ const RekapanAbsenScreen = () => {
           />
         )}
       </View>
-    </View>
+    </Background>
   );
-};
+}
 
 const styles = StyleSheet.create({
   flatview: {
@@ -234,5 +234,3 @@ const styles = StyleSheet.create({
     color: 'black',
   },
 });
-
-export default RekapanAbsenScreen;

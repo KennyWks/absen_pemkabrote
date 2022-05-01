@@ -11,6 +11,7 @@ import {passwordValidator} from '../helpers/passwordValidator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwtDecode from 'jwt-decode';
 import {postData} from '../helpers/CRUD';
+import {notifyBackHandler} from '../helpers/notifyBackHandler';
 
 export default function LoginScreen({navigation}) {
   const [id, setid] = useState({value: '', error: ''});
@@ -19,20 +20,10 @@ export default function LoginScreen({navigation}) {
 
   useEffect(() => {
     checkToken();
-    BackHandler.addEventListener('hardwareBackPress', () => checkBackHandler());
+    BackHandler.addEventListener('hardwareBackPress', () =>
+      notifyBackHandler(),
+    );
   }, []);
-
-  const checkBackHandler = () => {
-    Alert.alert('Uppsss!', 'Anda yakin ingin keluar aplikasi?', [
-      {
-        text: 'Batal',
-        onPress: () => null,
-        style: 'cancel',
-      },
-      {text: 'Ya', onPress: () => BackHandler.exitApp()},
-    ]);
-    return true;
-  };
 
   const checkToken = async () => {
     setLoad(true);

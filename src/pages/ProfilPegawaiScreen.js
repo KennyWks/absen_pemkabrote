@@ -20,8 +20,8 @@ export default function ProfilPegawaiScreen({navigation}) {
   const [updatedAt, setUpdatedAt] = useState('');
 
   let now = new Date();
-  var days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-  var months = [
+  let days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+  let months = [
     'Januari',
     'Februari',
     'Maret',
@@ -36,8 +36,8 @@ export default function ProfilPegawaiScreen({navigation}) {
     'Desember',
   ];
 
-  var day = days[now.getDay()];
-  var month = months[now.getMonth()];
+  let day = days[now.getDay()];
+  let month = months[now.getMonth()];
 
   useEffect(() => {
     checkToken();

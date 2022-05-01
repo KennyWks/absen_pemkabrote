@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {useRef, useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import AnalogClock from 'react-native-clock-analog';
@@ -13,7 +12,6 @@ export default function Clock() {
 
   return (
     <View style={styles.container}>
-      <View style={{marginBottom: 5}} />
       <AnalogClock
         colorClock="#560CCE"
         colorNumber="#000000"

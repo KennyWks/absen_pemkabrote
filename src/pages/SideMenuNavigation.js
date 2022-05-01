@@ -14,7 +14,7 @@ import CustomSidebarMenu from '../components/CustomSidebarMenu';
 
 const Drawer = createDrawerNavigator();
 
-const SideMenuNavigation = () => {
+export default function SideMenuNavigation() {
   const navigation = useNavigation();
 
   return (
@@ -56,7 +56,7 @@ const SideMenuNavigation = () => {
       <Drawer.Screen
         name="Absen"
         options={() => ({
-          headerRight: props => (
+          headerRight: () => (
             <View style={{margin: 15}}>
               <TouchableOpacity
                 onPress={() => {
@@ -130,6 +130,4 @@ const SideMenuNavigation = () => {
       />
     </Drawer.Navigator>
   );
-};
-
-export default SideMenuNavigation;
+}

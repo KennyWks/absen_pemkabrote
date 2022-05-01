@@ -12,7 +12,7 @@ import BackNavigation from '../components/BackNavigation';
 
 const Stack = createStackNavigator();
 
-const Navigation = () => {
+export default function Navigation() {
   return (
     <SafeAreaProvider>
       <NavigationContainer independent={true}>
@@ -35,8 +35,8 @@ const Navigation = () => {
           <Stack.Screen
             name="Tambah Kegiatan"
             component={FormTambahKerja}
-            options={({navigation, route}) => ({
-              headerLeft: props => (
+            options={({navigation}) => ({
+              headerLeft: () => (
                 <BackNavigation page="Dashboard" navigation={navigation} />
               ),
             })}
@@ -44,8 +44,8 @@ const Navigation = () => {
           <Stack.Screen
             name="Ubah Kegiatan"
             component={FormUbahKerja}
-            options={({navigation, route}) => ({
-              headerLeft: props => (
+            options={({navigation}) => ({
+              headerLeft: () => (
                 <BackNavigation page="Dashboard" navigation={navigation} />
               ),
             })}
@@ -54,6 +54,4 @@ const Navigation = () => {
       </NavigationContainer>
     </SafeAreaProvider>
   );
-};
-
-export default Navigation;
+}

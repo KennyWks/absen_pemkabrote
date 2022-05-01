@@ -51,7 +51,6 @@ export default class App extends Component {
       })
       .catch(err => {
         Alert.alert('Pastikan GPS anda dalam keadaan hidup!');
-        // console.warn(err);
       });
   };
 
@@ -79,7 +78,6 @@ export default class App extends Component {
         }
       } catch (error) {
         Alert.alert('Error:', JSON.stringify(error.response.status));
-        // console.log(error.response);
       }
       this.setState(prevState => ({
         ...prevState,
@@ -105,11 +103,10 @@ export default class App extends Component {
         Alert.alert(response.data.message);
         await AsyncStorage.removeItem('absen_id');
       } else {
-        Alert.alert('Proses Absen Keluar Tidak Dapat Diproses');
+        Alert.alert('Absen Keluar Tidak Dapat Diproses');
       }
     } catch (error) {
       Alert.alert('Error:', JSON.stringify(error.response.status));
-      // console.log(error.response);
     }
     this.setState(prevState => ({
       ...prevState,
@@ -125,7 +122,7 @@ export default class App extends Component {
   };
 
   render() {
-    const {loadIn, loadOut} = this.state;
+    const {loadIn, loadOut, coordinates} = this.state;
     return (
       <View style={styles.page}>
         <View style={styles.container}>
@@ -142,12 +139,12 @@ export default class App extends Component {
               }}
             />
             <MapboxGL.Camera
-              followZoomLevel={15} //followUserLocation
+              followZoomLevel={15}
               followUserLocation={true}
               followUserMode={'normal'}
               animationDuration={1000}
               pitch={50}
-              centerCoordinate={this.state.coordinates}
+              centerCoordinate={coordinates}
               onUserTrackingModeChange={e => {
                 this.setState(prevState => ({
                   ...prevState,

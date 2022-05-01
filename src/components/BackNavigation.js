@@ -1,8 +1,9 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View} from 'react-native';
 import Icon from 'react-native-ico';
 
-const BackNavigation = props => {
+export default function BackNavigation(props) {
   return (
     <View style={{margin: 10}}>
       <Icon
@@ -14,6 +15,4 @@ const BackNavigation = props => {
       />
     </View>
   );
-};
-
-export default BackNavigation;
+}

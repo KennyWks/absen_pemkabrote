@@ -4,7 +4,6 @@ let globalState = {
   isLogin: false,
 };
 
-// Reducer
 const rootReducer = (state = globalState, action) => {
   if (action.type === ActionType.IS_LOGIN) {
   }

@@ -86,7 +86,6 @@ export default function FormUbahKerjaScreen({route, navigation}) {
       }
     } catch (error) {
       Alert.alert('Error:', JSON.stringify(error.response.status));
-      // console.log(error.response);
     }
     setLoad(false);
   };

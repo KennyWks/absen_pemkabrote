@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Splash from './src/components/SplashScreen';
 import Error from './src/components/ErrorScreen';
 import Navigation from './src/pages/Navigations';
-// import {MenuProvider} from 'react-native-popup-menu';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import rootReducer from './src/redux/reducer/globalReducer';
@@ -41,12 +40,6 @@ export default class App extends Component {
   }
 
   render() {
-    return (
-      <Provider store={storeRedux}>
-        {/* <MenuProvider> */}
-        {this.state.view}
-        {/* </MenuProvider> */}
-      </Provider>
-    );
+    return <Provider store={storeRedux}>{this.state.view}</Provider>;
   }
 }

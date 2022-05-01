@@ -15,7 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwtDecode from 'jwt-decode';
 import Icon from 'react-native-ico';
 
-const KinerjaHarianScreen = ({navigation}) => {
+export default function KinerjaHarianScreen({navigation}) {
   const [data, setData] = useState({});
   const [load, setLoad] = useState(false);
 
@@ -37,7 +37,6 @@ const KinerjaHarianScreen = ({navigation}) => {
       }
     } catch (error) {
       Alert.alert('Error:', JSON.stringify(error.response.status));
-      // console.log(error.response);
     }
     setLoad(false);
   };
@@ -124,7 +123,7 @@ const KinerjaHarianScreen = ({navigation}) => {
       </View>
     </Background>
   );
-};
+}
 
 const styles = StyleSheet.create({
   flatview: {
@@ -138,5 +137,3 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
-
-export default KinerjaHarianScreen;
