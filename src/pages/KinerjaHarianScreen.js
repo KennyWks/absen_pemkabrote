@@ -13,7 +13,7 @@ import Background from '../components/Background';
 import {getData} from '../helpers/CRUD';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwtDecode from 'jwt-decode';
-import Icon from 'react-native-ico';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 export default function KinerjaHarianScreen({navigation}) {
   const [data, setData] = useState({});
@@ -72,6 +72,10 @@ export default function KinerjaHarianScreen({navigation}) {
                   justifyContent: 'flex-start',
                   alignItems: 'center',
                   flexDirection: 'row',
+                  borderColor: 'gray',
+                  borderWidth: 0.7,
+                  borderRadius: 3,
+                  marginBottom: 5,
                 }}>
                 <View
                   style={{
@@ -90,26 +94,17 @@ export default function KinerjaHarianScreen({navigation}) {
                         selesai_kegiatan: item.selesai,
                       });
                     }}>
-                    <Icon
-                      name="font-selection-editor"
-                      group="font-awesome"
-                      height="30"
-                      width="30"
-                    />
+                    <FontAwesome5 name="pen-square" size={25} color="#000" />
                   </TouchableOpacity>
                 </View>
                 <View style={styles.flatview}>
                   <Text style={styles.judul}>
-                    {item.judul}{' '}
+                    {item.judul}
                     {item.status === 1 && (
-                      <Icon
-                        style={{
-                          margin: 5,
-                        }}
-                        name="circle-with-check-symbol"
-                        group="material-design"
-                        height="18"
-                        width="18"
+                      <FontAwesome5
+                        name="clipboard-check"
+                        size={25}
+                        color="#000"
                       />
                     )}
                   </Text>

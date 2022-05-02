@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
   Alert,
   ActivityIndicator,
 } from 'react-native';
@@ -13,10 +12,10 @@ import {getData} from '../helpers/CRUD';
 import Background from '../components/Background';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwtDecode from 'jwt-decode';
-import Icon from 'react-native-ico';
-import {Dropdown} from 'react-native-element-dropdown';
+import {Dropdown} from 'react-native-element-dropdown/index.ts';
 import moment from 'moment';
 import 'moment/locale/id';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const monthData = [
   {label: 'Januari', value: '01'},
@@ -82,97 +81,111 @@ export default function RekapanAbsenScreen() {
 
   return (
     <Background>
-      <View style={styles.container}>
-        {renderLabel()}
-        <Dropdown
-          style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={monthData}
-          search
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder={!isFocus ? 'Pilih Bulan' : '...'}
-          searchPlaceholder="Cari..."
-          value={value}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            setValue(item.value);
-            setIsFocus(false);
-            getDataAbsen(item.value);
-          }}
-          renderLeftIcon={() => <Icon name="calendar" group="miscellaneous" />}
-        />
-      </View>
       <View
         style={{
           width: '100%',
-          justifyContent: 'center',
-          flexDirection: 'row',
+          height: '100%',
+          justifyContent: 'flex-start',
         }}>
-        <ActivityIndicator animating={load} color="black" />
-        {!load && dataAbsen.length < 1 && (
-          <View
-            style={{
-              width: '100%',
-              justifyContent: 'center',
-              alignItems: 'flex-start',
-              flexDirection: 'row',
-            }}>
-            <Text
-              style={{
-                color: 'black',
-              }}>
-              Data Kosong
-            </Text>
-          </View>
-        )}
-        {!load && dataAbsen.length > 0 && (
-          <FlatList
-            data={dataAbsen}
-            showsVerticalScrollIndicator={false}
-            renderItem={({item}) => (
-              <View
-                style={{
-                  width: '90%',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                  marginLeft: 10,
-                  borderColor: 'gray',
-                  borderWidth: 0.7,
-                  borderRadius: 3,
-                  padding: 5,
-                }}>
-                <TouchableOpacity style={{margin: 5}}>
-                  <Icon name="map-placeholder" group="material-design" />
-                </TouchableOpacity>
-                <View style={styles.flatview}>
-                  <Text style={styles.judul}>
-                    {moment(item.created_at)
-                      .locale('id')
-                      .format('dddd, DD MMMM YYYY')}
-                  </Text>
-                  <Text style={styles.absenTime}>
-                    Masuk : {moment(item.created_at).format('hh:mm:ss')}
-                  </Text>
-                  <Text style={styles.absenTime}>
-                    Keluar :{' '}
-                    {item.latitude_keluar === null ||
-                    item.longitude_keluar === null
-                      ? ''
-                      : moment(item.update_at).format('DD-MM-YYYY hh:mm:ss')}
-                  </Text>
-                </View>
-              </View>
+        <View style={styles.container}>
+          {renderLabel()}
+          <Dropdown
+            style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={monthData}
+            search
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder={!isFocus ? 'Pilih Bulan' : '...'}
+            searchPlaceholder="Cari..."
+            value={value}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            onChange={item => {
+              setValue(item.value);
+              setIsFocus(false);
+              getDataAbsen(item.value);
+            }}
+            renderLeftIcon={() => (
+              <FontAwesome5 name="calendar-alt" size={25} color="#000" />
             )}
-            keyExtractor={item => item.absen_id}
           />
-        )}
+        </View>
+
+        <View
+          style={{
+            width: '100%',
+            justifyContent: 'center',
+            flexDirection: 'row',
+          }}>
+          <ActivityIndicator animating={load} color="black" />
+          {!load && dataAbsen.length < 1 && (
+            <View
+              style={{
+                width: '100%',
+                justifyContent: 'center',
+                alignItems: 'flex-start',
+                flexDirection: 'row',
+              }}>
+              <Text
+                style={{
+                  color: 'black',
+                }}>
+                Data Kosong
+              </Text>
+            </View>
+          )}
+          {!load && dataAbsen.length > 0 && (
+            <FlatList
+              data={dataAbsen}
+              showsVerticalScrollIndicator={false}
+              renderItem={({item}) => (
+                <View
+                  style={{
+                    width: '90%',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    marginLeft: 10,
+                    borderColor: 'gray',
+                    borderWidth: 0.7,
+                    borderRadius: 3,
+                    padding: 5,
+                  }}>
+                  <View style={{margin: 5}}>
+                    <FontAwesome5
+                      name="map-marker-alt"
+                      size={25}
+                      color="#000"
+                    />
+                  </View>
+                  <View style={styles.flatview}>
+                    <Text style={styles.judul}>
+                      {moment(item.created_at)
+                        .locale('id')
+                        .format('dddd, DD MMMM YYYY')}
+                    </Text>
+                    <Text style={styles.absenTime}>
+                      Masuk : {moment(item.created_at).format('hh:mm:ss')}
+                    </Text>
+                    <Text style={styles.absenTime}>
+                      Keluar :{' '}
+                      {item.latitude_keluar === null ||
+                      item.longitude_keluar === null
+                        ? ''
+                        : moment(item.update_at).format('DD-MM-YYYY hh:mm:ss')}
+                    </Text>
+                  </View>
+                </View>
+              )}
+              keyExtractor={item => item.absen_id}
+            />
+          )}
+        </View>
       </View>
     </Background>
   );
@@ -182,7 +195,6 @@ const styles = StyleSheet.create({
   flatview: {
     justifyContent: 'center',
     paddingTop: 5,
-    borderRadius: 2,
   },
   judul: {
     color: 'red',
@@ -190,7 +202,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   container: {
-    padding: 16,
+    padding: 15,
   },
   absenTime: {
     color: 'black',

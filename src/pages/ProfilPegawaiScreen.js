@@ -1,15 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
 import Background from '../components/Background';
-import {ScrollView} from 'react-native-gesture-handler';
 import CardView from 'react-native-cardview';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {logoutAction} from '../helpers/logout';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwtDecode from 'jwt-decode';
-import Clock from '../components/Clock';
 import {getData} from '../helpers/CRUD';
 import moment from 'moment';
+import AnalogClock from 'react-native-clock-analog';
 
 export default function ProfilPegawaiScreen({navigation}) {
   const [nip, setNip] = useState('');
@@ -140,7 +139,17 @@ export default function ProfilPegawaiScreen({navigation}) {
               </Text>
             </View>
           </View>
-          <Clock />
+          <View style={styles.timeContainer}>
+            <AnalogClock
+              colorClock="#560CCE"
+              colorNumber="#000000"
+              colorCenter="#00BCD4"
+              colorHour="#FF8F00"
+              colorMinutes="#FFC400"
+              autostart={true}
+              showSeconds
+            />
+          </View>
           <View
             style={{
               flexDirection: 'row',
@@ -164,6 +173,13 @@ export default function ProfilPegawaiScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
+  timeContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    marginTop: 20,
+  },
   card: {
     backgroundColor: 'white',
     alignItems: 'center',

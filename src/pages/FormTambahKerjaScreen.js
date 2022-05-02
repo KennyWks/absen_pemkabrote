@@ -17,13 +17,17 @@ import {judulValidator} from '../helpers/judulValidator';
 import {deskripsiValidator} from '../helpers/deskripsiValidator';
 import {mulaiValidator} from '../helpers/mulaiValidator';
 import {selesaiValidator} from '../helpers/selesaiValidator';
-import Icon from 'react-native-ico';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {postData} from '../helpers/CRUD';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwtDecode from 'jwt-decode';
 import moment from 'moment';
+import Header from '../components/Header';
+import {useNavigation} from '@react-navigation/native';
 
 export default function FormTambahKerjaScreen() {
+  const navigation = useNavigation();
+
   const [load, setLoad] = useState(false);
   const [judul, setJudul] = useState({value: '', error: ''});
   const [deskripsi, setDeskripsi] = useState({value: '', error: ''});
@@ -69,6 +73,7 @@ export default function FormTambahKerjaScreen() {
         setMulai({value: '', error: ''});
         setSelesai({value: '', error: ''});
       }
+      navigation.push('Kinerja Harian');
     } catch (error) {
       Alert.alert('Error:', JSON.stringify(error.response.status));
     }
@@ -102,8 +107,9 @@ export default function FormTambahKerjaScreen() {
   };
 
   return (
-    <Background>
-      <ScrollView>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}>
+      <Background>
+        <Header>Form Tambah Kegiatan</Header>
         <View
           style={{
             width: '98%',
@@ -144,12 +150,7 @@ export default function FormTambahKerjaScreen() {
             <TouchableOpacity
               style={{width: '10%'}}
               onPress={showDatePickerMulai}>
-              <Icon
-                name="time-management"
-                group="miscellaneous"
-                height="30"
-                width="30"
-              />
+              <FontAwesome5 name="business-time" size={25} color="#000" />
             </TouchableOpacity>
           </View>
           <Text style={styles.smallText}>
@@ -178,12 +179,7 @@ export default function FormTambahKerjaScreen() {
             <TouchableOpacity
               style={{width: '10%'}}
               onPress={showDatePickerSelesai}>
-              <Icon
-                name="time-management"
-                group="miscellaneous"
-                height="30"
-                width="30"
-              />
+              <FontAwesome5 name="business-time" size={25} color="#000" />
             </TouchableOpacity>
           </View>
           <Text style={styles.smallText}>
@@ -197,7 +193,6 @@ export default function FormTambahKerjaScreen() {
             onConfirm={handleConfirmSelesai}
             onCancel={hideDatePickerSelesai}
           />
-          <ActivityIndicator animating={load} color="black" />
           {!load && (
             <Button
               mode="contained"
@@ -207,9 +202,10 @@ export default function FormTambahKerjaScreen() {
               Tambah
             </Button>
           )}
+          <ActivityIndicator animating={load} color="black" />
         </View>
-      </ScrollView>
-    </Background>
+      </Background>
+    </ScrollView>
   );
 }
 

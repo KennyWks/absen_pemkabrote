@@ -1,4 +1,4 @@
-import 'react-native-gesture-handler';
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -8,7 +8,10 @@ import Dashboard from './SideMenuNavigation';
 import Peta from './PetaScreen';
 import FormTambahKerja from './FormTambahKerjaScreen';
 import FormUbahKerja from './FormUbahKerjaScreen';
-import BackNavigation from '../components/BackNavigation';
+import KinerjaHarian from './KinerjaHarianScreen';
+import BackNavigation from '../components/IconNavigation';
+import IconNavigation from '../components/IconNavigation';
+import {View} from 'react-native';
 
 const Stack = createStackNavigator();
 
@@ -37,7 +40,13 @@ export default function Navigation() {
             component={FormTambahKerja}
             options={({navigation}) => ({
               headerLeft: () => (
-                <BackNavigation page="Dashboard" navigation={navigation} />
+                <BackNavigation
+                  page="Kinerja Harian"
+                  name="arrow-left"
+                  navigation={navigation}
+                  size={20}
+                  color="#000"
+                />
               ),
             })}
           />
@@ -46,7 +55,39 @@ export default function Navigation() {
             component={FormUbahKerja}
             options={({navigation}) => ({
               headerLeft: () => (
-                <BackNavigation page="Dashboard" navigation={navigation} />
+                <BackNavigation
+                  page="Kinerja Harian"
+                  name="arrow-left"
+                  navigation={navigation}
+                  size={20}
+                  color="#000"
+                />
+              ),
+            })}
+          />
+          <Stack.Screen
+            name="Kinerja Harian"
+            component={KinerjaHarian}
+            options={({navigation}) => ({
+              headerRight: () => (
+                <View style={{margin: 15}}>
+                  <IconNavigation
+                    page="Tambah Kegiatan"
+                    name="plus"
+                    navigation={navigation}
+                    size={25}
+                    color="#000"
+                  />
+                </View>
+              ),
+              headerLeft: () => (
+                <BackNavigation
+                  page="Dashboard"
+                  name="arrow-left"
+                  navigation={navigation}
+                  size={20}
+                  color="#000"
+                />
               ),
             })}
           />

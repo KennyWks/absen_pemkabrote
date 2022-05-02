@@ -27,11 +27,9 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      coordinates: [-73.98330688476561, 40.76975180901395],
+      coordinates: [123.04464898330878, -10.747494734531],
       loadIn: false,
       loadOut: false,
-      firstTime: '',
-      lastTime: '',
     };
   }
 
@@ -59,33 +57,29 @@ export default class App extends Component {
   }
 
   submitLocationIn = async () => {
-    if (this.state.firstTime !== this.state.lastTime) {
-      this.setState(prevState => ({
-        ...prevState,
-        loadIn: true,
-      }));
-      const token = await AsyncStorage.getItem('accessToken');
-      const decodeToken = jwtDecode(token);
-      try {
-        const response = await postData('/absen', {
-          users_id: decodeToken.users_id,
-          latitude_masuk: this.state.coordinates[0],
-          longitude_masuk: this.state.coordinates[1],
-        });
-        Alert.alert(response.data.message);
-        if (response.data.status !== 403) {
-          await AsyncStorage.setItem('absen_id', response.data.absen_id);
-        }
-      } catch (error) {
-        Alert.alert('Error:', JSON.stringify(error.response.status));
+    this.setState(prevState => ({
+      ...prevState,
+      loadIn: true,
+    }));
+    const token = await AsyncStorage.getItem('accessToken');
+    const decodeToken = jwtDecode(token);
+    try {
+      const response = await postData('/absen', {
+        users_id: decodeToken.users_id,
+        latitude_masuk: this.state.coordinates[0],
+        longitude_masuk: this.state.coordinates[1],
+      });
+      Alert.alert(response.data.message);
+      if (response.data.status !== 403) {
+        await AsyncStorage.setItem('absen_id', response.data.absen_id);
       }
-      this.setState(prevState => ({
-        ...prevState,
-        loadIn: false,
-      }));
-    } else {
-      Alert.alert('Error!');
+    } catch (error) {
+      Alert.alert('Error:', JSON.stringify(error.response.status));
     }
+    this.setState(prevState => ({
+      ...prevState,
+      loadIn: false,
+    }));
   };
 
   submitLocationOut = async () => {
@@ -145,18 +139,6 @@ export default class App extends Component {
               animationDuration={1000}
               pitch={50}
               centerCoordinate={coordinates}
-              onUserTrackingModeChange={e => {
-                this.setState(prevState => ({
-                  ...prevState,
-                  firstTime: e.timeStamp,
-                }));
-                setTimeout(() => {
-                  this.setState(prevState => ({
-                    ...prevState,
-                    lastTime: e.timeStamp,
-                  }));
-                }, 1000);
-              }}
             />
           </MapboxGL.MapView>
 

@@ -1,8 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import 'react-native-gesture-handler';
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import Icon from 'react-native-ico';
 import {TouchableOpacity, View, Alert} from 'react-native';
 import ProfilPegawai from './ProfilPegawaiScreen';
 import KinerjaHarian from './KinerjaHarianScreen';
@@ -11,6 +9,8 @@ import RakapanAbsen from './RekapanAbsenScreen';
 import {logoutAction} from '../helpers/logout';
 import {useNavigation} from '@react-navigation/native';
 import CustomSidebarMenu from '../components/CustomSidebarMenu';
+import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconNavigation from '../components/IconNavigation';
 
 const Drawer = createDrawerNavigator();
 
@@ -28,27 +28,7 @@ export default function SideMenuNavigation() {
         name="Profil Pegawai"
         component={ProfilPegawai}
         options={() => ({
-          headerRight: props => (
-            <View style={{margin: 15}}>
-              <TouchableOpacity
-                onPress={() => {
-                  Alert.alert('Uppsss!', 'Anda yakin ingin keluar dari akun?', [
-                    {
-                      text: 'Batal',
-                      onPress: () => null,
-                      style: 'cancel',
-                    },
-                    {
-                      text: 'Ya',
-                      onPress: () => logoutAction({navigation}, 'Login'),
-                    },
-                  ]);
-                  return true;
-                }}>
-                <Icon name="logout" group="miscellaneous" />
-              </TouchableOpacity>
-            </View>
-          ),
+          headerRight: () => <LogoutButton />,
           drawerLabel: 'Profil Pegawai',
         })}
       />
@@ -56,27 +36,7 @@ export default function SideMenuNavigation() {
       <Drawer.Screen
         name="Absen"
         options={() => ({
-          headerRight: () => (
-            <View style={{margin: 15}}>
-              <TouchableOpacity
-                onPress={() => {
-                  Alert.alert('Uppsss!', 'Anda yakin ingin keluar dari akun?', [
-                    {
-                      text: 'Batal',
-                      onPress: () => null,
-                      style: 'cancel',
-                    },
-                    {
-                      text: 'Ya',
-                      onPress: () => logoutAction({navigation}, 'Login'),
-                    },
-                  ]);
-                  return true;
-                }}>
-                <Icon name="logout" group="miscellaneous" />
-              </TouchableOpacity>
-            </View>
-          ),
+          headerRight: () => <LogoutButton />,
           drawerLabel: 'Absen Hari Ini',
         })}
         component={PetaScreen}
@@ -88,12 +48,13 @@ export default function SideMenuNavigation() {
           drawerLabel: 'Kinerja Harian',
           headerRight: () => (
             <View style={{margin: 15}}>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.push('Tambah Kegiatan');
-                }}>
-                <Icon name="plus" group="ui-interface" />
-              </TouchableOpacity>
+              <IconNavigation
+                page="Tambah Kegiatan"
+                name="plus"
+                navigation={navigation}
+                size={25}
+                color="#000"
+              />
             </View>
           ),
         }}
@@ -103,27 +64,7 @@ export default function SideMenuNavigation() {
       <Drawer.Screen
         name="Rekapan Absen"
         options={() => ({
-          headerRight: props => (
-            <View style={{margin: 15}}>
-              <TouchableOpacity
-                onPress={() => {
-                  Alert.alert('Uppsss!', 'Anda yakin ingin keluar dari akun?', [
-                    {
-                      text: 'Batal',
-                      onPress: () => null,
-                      style: 'cancel',
-                    },
-                    {
-                      text: 'Ya',
-                      onPress: () => logoutAction({navigation}, 'Login'),
-                    },
-                  ]);
-                  return true;
-                }}>
-                <Icon name="logout" group="miscellaneous" />
-              </TouchableOpacity>
-            </View>
-          ),
+          headerRight: () => <LogoutButton />,
           drawerLabel: 'Rekapan Absen',
         })}
         component={RakapanAbsen}
@@ -131,3 +72,29 @@ export default function SideMenuNavigation() {
     </Drawer.Navigator>
   );
 }
+
+const LogoutButton = () => {
+  const navigation = useNavigation();
+
+  return (
+    <View style={{margin: 15}}>
+      <TouchableOpacity
+        onPress={() => {
+          Alert.alert('Uppsss!', 'Anda yakin ingin keluar dari akun?', [
+            {
+              text: 'Batal',
+              onPress: () => null,
+              style: 'cancel',
+            },
+            {
+              text: 'Ya',
+              onPress: () => logoutAction({navigation}, 'Login'),
+            },
+          ]);
+          return true;
+        }}>
+        <MaterialIcons name="logout" size={25} color="#000" />
+      </TouchableOpacity>
+    </View>
+  );
+};
