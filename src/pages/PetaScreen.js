@@ -1,10 +1,18 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {StyleSheet, View, Button, Alert, ActivityIndicator} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Button,
+  Alert,
+  ActivityIndicator,
+  PermissionsAndroid,
+} from 'react-native';
 import MapboxGL, {Logger} from '@react-native-mapbox-gl/maps';
 import {postData, patchData} from '../helpers/CRUD';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwtDecode from 'jwt-decode';
+import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 
 MapboxGL.setAccessToken(
   'sk.eyJ1IjoibG9yZW0tbWVyb2wiLCJhIjoiY2wyMDgxZGFxMHRzYjNibXo0NjBoaGV3aiJ9.W9akdidMfTTtFgut5rpcTw',
@@ -28,8 +36,50 @@ export default class App extends Component {
       coordinates: [123.04464898330878, -10.747494734531],
       loadIn: false,
       loadOut: false,
+      hasLocationPermission: false,
     };
   }
+
+  componentDidMount() {
+    this.requestLocationPermission();
+  }
+
+  requestLocationPermission = () => {
+    PermissionsAndroid.requestMultiple(
+      [
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+      ],
+      {
+        title: 'Permintaan akses lokasi',
+        message: 'Aplikasi ini membutuhan izin untu mengakses lokasi anda.',
+      },
+    )
+      .then(() => {
+        this.enableCurrentLocation();
+      })
+      .catch(() => {
+        Alert.alert(
+          'Pastikan izin aplikasi untuk mendapatkan lokasi telah diberikan!',
+        );
+      });
+  };
+
+  enableCurrentLocation = () => {
+    RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({
+      interval: 10000,
+      fastInterval: 5000,
+    })
+      .then(() => {
+        this.setState(prevState => ({
+          ...prevState,
+          hasLocationPermission: true,
+        }));
+      })
+      .catch(() => {
+        Alert.alert('Error saat mengaktifkan GPS');
+      });
+  };
 
   submitLocationIn = async () => {
     this.setState(prevState => ({
@@ -91,7 +141,7 @@ export default class App extends Component {
   };
 
   render() {
-    const {loadIn, loadOut, coordinates} = this.state;
+    const {loadIn, loadOut, coordinates, hasLocationPermission} = this.state;
     return (
       <View style={styles.page}>
         <View style={styles.container}>
@@ -99,10 +149,11 @@ export default class App extends Component {
             style={styles.map}
             zoomEnabled={true}
             onUserLocationUpdate={location => {
-              console.log(location);
+              console.log(location + 'onUserLocationUpdate');
               this.setLocationOnMap(location);
             }}>
             <MapboxGL.UserLocation
+              visible={true}
               showsUserHeadingIndicator={true}
               onUpdate={location => {
                 this.setLocationOnMap(location);
@@ -129,7 +180,10 @@ export default class App extends Component {
             {!loadIn && !loadOut && (
               <Button
                 onPress={() => {
-                  this.submitLocationIn();
+                  this.enableCurrentLocation();
+                  if (hasLocationPermission) {
+                    this.submitLocationIn();
+                  }
                 }}
                 color={'#560CCE'}
                 title="Masuk"
@@ -138,7 +192,10 @@ export default class App extends Component {
             {!loadOut && !loadIn && (
               <Button
                 onPress={() => {
-                  this.submitLocationOut();
+                  this.enableCurrentLocation();
+                  if (hasLocationPermission) {
+                    this.submitLocationOut();
+                  }
                 }}
                 color={'#560CCE'}
                 title="Keluar"
