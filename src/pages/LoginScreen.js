@@ -96,12 +96,12 @@ export default function LoginScreen({navigation}) {
         errorText={password.error}
         secureTextEntry
       />
-      <ActivityIndicator animating={load} color="black" />
       {!load && (
         <Button mode="contained" onPress={onLoginPressed}>
           Login
         </Button>
       )}
+      <ActivityIndicator animating={load} color="black" />
     </Background>
   );
 }

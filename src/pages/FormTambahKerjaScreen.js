@@ -183,7 +183,7 @@ export default function FormTambahKerjaScreen() {
             </TouchableOpacity>
           </View>
           <Text style={styles.smallText}>
-            {selesai.error ? `${mulai.error}` : ''}
+            {selesai.error ? `${selesai.error}` : ''}
           </Text>
           <DateTimePickerModal
             isVisible={isDatePickerSelesaiVisible}

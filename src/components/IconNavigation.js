@@ -5,7 +5,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 export default function IconNavigation(props) {
   return (
-    <TouchableOpacity style={{marginLeft: 10}}>
+    <TouchableOpacity style={{marginLeft: 15}}>
       <FontAwesome5
         name={props.name}
         size={props.size}

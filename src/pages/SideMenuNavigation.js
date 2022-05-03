@@ -35,39 +35,37 @@ export default function SideMenuNavigation() {
 
       <Drawer.Screen
         name="Absen"
+        component={PetaScreen}
         options={() => ({
           headerRight: () => <LogoutButton />,
           drawerLabel: 'Absen Hari Ini',
         })}
-        component={PetaScreen}
       />
 
       <Drawer.Screen
         name="Kinerja Harian"
+        component={KinerjaHarian}
         options={{
           drawerLabel: 'Kinerja Harian',
           headerRight: () => (
-            <View style={{margin: 15}}>
-              <IconNavigation
-                page="Tambah Kegiatan"
-                name="plus"
-                navigation={navigation}
-                size={25}
-                color="#000"
-              />
-            </View>
+            <IconNavigation
+              page="Tambah Kegiatan"
+              name="plus"
+              navigation={navigation}
+              size={25}
+              color="#000"
+            />
           ),
         }}
-        component={KinerjaHarian}
       />
 
       <Drawer.Screen
         name="Rekapan Absen"
+        component={RakapanAbsen}
         options={() => ({
           headerRight: () => <LogoutButton />,
           drawerLabel: 'Rekapan Absen',
         })}
-        component={RakapanAbsen}
       />
     </Drawer.Navigator>
   );

@@ -1,17 +1,14 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Login from './LoginScreen';
 import Dashboard from './SideMenuNavigation';
-import Peta from './PetaScreen';
 import FormTambahKerja from './FormTambahKerjaScreen';
 import FormUbahKerja from './FormUbahKerjaScreen';
 import KinerjaHarian from './KinerjaHarianScreen';
 import BackNavigation from '../components/IconNavigation';
 import IconNavigation from '../components/IconNavigation';
-import {View} from 'react-native';
 
 const Stack = createStackNavigator();
 
@@ -28,11 +25,6 @@ export default function Navigation() {
           <Stack.Screen
             name="Dashboard"
             component={Dashboard}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Peta"
-            component={Peta}
             options={{headerShown: false}}
           />
           <Stack.Screen
@@ -70,15 +62,13 @@ export default function Navigation() {
             component={KinerjaHarian}
             options={({navigation}) => ({
               headerRight: () => (
-                <View style={{margin: 15}}>
-                  <IconNavigation
-                    page="Tambah Kegiatan"
-                    name="plus"
-                    navigation={navigation}
-                    size={25}
-                    color="#000"
-                  />
-                </View>
+                <IconNavigation
+                  page="Tambah Kegiatan"
+                  name="plus"
+                  navigation={navigation}
+                  size={25}
+                  color="#000"
+                />
               ),
               headerLeft: () => (
                 <BackNavigation

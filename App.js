@@ -2,13 +2,7 @@ import React, {Component} from 'react';
 import Splash from './src/components/SplashScreen';
 import Error from './src/components/ErrorScreen';
 import Navigation from './src/pages/Navigations';
-import {Provider} from 'react-redux';
-import {createStore, applyMiddleware} from 'redux';
-import rootReducer from './src/redux/reducer/globalReducer';
-import thunk from 'redux-thunk';
 import JailMonkey from 'jail-monkey';
-
-const storeRedux = createStore(rootReducer, applyMiddleware(thunk));
 
 export default class App extends Component {
   constructor(props) {
@@ -35,6 +29,6 @@ export default class App extends Component {
   }
 
   render() {
-    return <Provider store={storeRedux}>{this.state.view}</Provider>;
+    return this.state.view;
   }
 }

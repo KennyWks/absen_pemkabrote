@@ -124,6 +124,7 @@ export default class App extends Component {
             style={styles.map}
             zoomEnabled={true}
             onUserLocationUpdate={location => {
+              console.log(location);
               this.setLocationOnMap(location);
             }}>
             <MapboxGL.UserLocation
