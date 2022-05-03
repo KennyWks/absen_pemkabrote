@@ -1,9 +1,7 @@
-/* eslint-disable handle-callback-err */
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {StyleSheet, View, Button, Alert, ActivityIndicator} from 'react-native';
 import MapboxGL, {Logger} from '@react-native-mapbox-gl/maps';
-import {PermissionsAndroid} from 'react-native';
 import {postData, patchData} from '../helpers/CRUD';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwtDecode from 'jwt-decode';
@@ -31,29 +29,6 @@ export default class App extends Component {
       loadIn: false,
       loadOut: false,
     };
-  }
-
-  requestLocationPermission = () => {
-    PermissionsAndroid.requestMultiple(
-      [
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
-      ],
-      {
-        title: 'Permintaan akses lokasi',
-        message: 'Aplikasi ini membutuhan izin untu mengakses lokasi anda.',
-      },
-    )
-      .then(granted => {
-        this.camera.moveTo(this.state.coordinates, 200);
-      })
-      .catch(err => {
-        Alert.alert('Pastikan GPS anda dalam keadaan hidup!');
-      });
-  };
-
-  componentDidMount() {
-    this.requestLocationPermission();
   }
 
   submitLocationIn = async () => {

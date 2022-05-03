@@ -66,7 +66,7 @@ export default function Navigation() {
                   page="Tambah Kegiatan"
                   name="plus"
                   navigation={navigation}
-                  size={25}
+                  size={20}
                   color="#000"
                 />
               ),

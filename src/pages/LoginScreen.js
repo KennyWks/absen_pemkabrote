@@ -1,5 +1,11 @@
+/* eslint-disable handle-callback-err */
 import React, {useState, useEffect} from 'react';
-import {Alert, ActivityIndicator, BackHandler} from 'react-native';
+import {
+  Alert,
+  ActivityIndicator,
+  BackHandler,
+  PermissionsAndroid,
+} from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -19,11 +25,32 @@ export default function LoginScreen({navigation}) {
   const [load, setLoad] = useState(false);
 
   useEffect(() => {
+    requestLocationPermission();
     checkToken();
     BackHandler.addEventListener('hardwareBackPress', () =>
       notifyBackHandler(),
     );
   }, []);
+
+  const requestLocationPermission = () => {
+    PermissionsAndroid.requestMultiple(
+      [
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+      ],
+      {
+        title: 'Permintaan akses lokasi',
+        message: 'Aplikasi ini membutuhan izin untu mengakses lokasi anda.',
+      },
+    )
+      .then(granted => {})
+      .catch(err => {
+        console.log(err);
+        Alert.alert(
+          'Pastikan GPS atau izin aplikasi untuk mendapatkan lokasi telah diberikan!',
+        );
+      });
+  };
 
   const checkToken = async () => {
     setLoad(true);
